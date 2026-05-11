@@ -269,7 +269,7 @@ function renderKPI(k) {
   if (!k) return;
   document.getElementById('k-total').textContent = Math.round(k.totalHeadcount||0).toLocaleString() + ' 명';
   document.getElementById('k-users').textContent = (k.totalUsers||0).toLocaleString() + ' 명';
-  document.getElementById('k-rate').textContent  = (Math.round((k.usageRate||0)*10)/10) + '%';
+  document.getElementById('k-rate').textContent  = (k.usageRate||0).toFixed(1) + '%';
 }
 
 /* 일별 차트 */
