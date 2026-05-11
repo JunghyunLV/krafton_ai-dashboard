@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 역량강화 교육 이용 현황</title>
-<script src="./chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font-size:20px;}
+body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font-size:12px;}
 
 /* 로딩 */
 #loading{position:fixed;inset:0;background:#1a1a2e;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s;}
@@ -37,9 +37,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font
 .sec-title .dr{font-size:10px;font-weight:400;color:#aaa;margin-left:10px;}
 
 /* 페이지 */
-.page{width:100%;padding:10px 20px;}
+.page{max-width:1600px;margin:0 auto;padding:10px 14px;}
+
 /* 섹션1 그리드: 법인목록 | 차트 | 테이블 */
-.s1-row{display:grid;grid-template-columns:160px 1fr 420px;background:#fff;border:1px solid #d8dce2;border-radius:5px;overflow:hidden;margin-bottom:8px;}
+.s1-row{display:grid;grid-template-columns:160px 1fr 360px;background:#fff;border:1px solid #d8dce2;border-radius:5px;overflow:hidden;margin-bottom:8px;}
 
 /* 법인 목록 */
 .corp-list{background:#1e1e32;overflow-y:auto;max-height:290px;}
@@ -60,11 +61,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font
 /* 법인 테이블 */
 .corp-tbl-wrap{border-left:1px solid #eee;overflow-y:auto;max-height:290px;}
 table{width:100%;border-collapse:collapse;font-size:10px;}
-thead th{background:#1e1e32;color:#fff;padding:5px 7px;text-align:center;position:sticky;top:0;font-size:9px;font-weight:500;}
+thead th{background:#1e1e32;color:#fff;padding:5px 7px;text-align:center;position:sticky;top:0;font-size:9px;font-weight:500;white-space:nowrap;}
 tbody td{padding:4px 7px;border-bottom:1px solid #f2f4f6;text-align:center;}
 tbody tr:nth-child(even){background:#f9fafc;}
 tbody tr:hover{background:#e8f5e9;}
-.tn{text-align:left;font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tn{text-align:left;font-weight:500;min-width:160px;white-space:nowrap;}
 .rh{color:#2e7d32;font-weight:600;}
 .rm{color:#e65100;font-weight:600;}
 .rl{color:#c62828;font-weight:600;}
@@ -86,7 +87,7 @@ tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-we
 .c-table thead th{background:#1e1e32;color:#fff;padding:4px 7px;font-size:9px;font-weight:500;}
 .c-table tbody td{padding:4px 7px;border-bottom:1px solid #f2f4f6;}
 .c-table tbody tr:nth-child(odd){background:#f9fafc;}
-.c-rank{text-align:center;font-weight:700;color:#666;width:40px;white-space:nowrap;}
+.c-rank{text-align:center;font-weight:700;color:#666;width:28px;}
 .c-name{max-width:260px;}
 .c-num{text-align:right;font-weight:600;white-space:nowrap;}
 .r1 .c-rank{color:#f57f17;}
@@ -201,7 +202,7 @@ tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-we
 
 <script>
 // ★ 배포한 GAS 웹앱 URL로 교체하세요 ★
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzfO2jxhWWp-l7dfLinZjE0UypGHaKeVCo3ir1s4yV35xKUS-Af6xo2k3uelgzamiz_/exec';
+// GAS_URL 제거 — data.json fetch 방식으로 전환
 
 // fallback (GAS 연결 실패 시에만 사용)
 const CORP_TOTAL_FALLBACK = {
@@ -215,22 +216,17 @@ let corpTotalMap = { ...CORP_TOTAL_FALLBACK };
 
 /* ── 데이터 로드 ── */
 function load() {
-  if (!GAS_URL || GAS_URL.indexOf('YOUR_DEPLOYED_GAS_WEBAPP_URL') >= 0) {
-    showErr('GAS_URL 값을 먼저 설정해주세요.');
-    return;
-  }
-  const s = document.createElement('script');
-  s.src = GAS_URL + '?callback=onData&t=' + Date.now();
-  s.onerror = () => showErr('GAS 연결 실패');
-  document.head.appendChild(s);
-  setTimeout(() => {
-    if (!document.getElementById('loading').classList.contains('hide'))
-      showErr('로딩 시간 초과. 새로고침 해주세요.');
-  }, 20000);
+  fetch('./data.json?t=' + Date.now())
+    .then(function(res) {
+      if (!res.ok) throw new Error('data.json 로드 실패 (' + res.status + ')');
+      return res.json();
+    })
+    .then(function(d) { onData(d); })
+    .catch(function(e) { showErr(e.message); });
 }
 
 function onData(d) {
-  if (d.error) { showErr('GAS 오류: ' + d.error); return; }
+  if (d.error) { showErr('데이터 오류: ' + d.error); return; }
   try {
     corpTotalMap = Object.keys(d.corpTotals || {}).length ? d.corpTotals : { ...CORP_TOTAL_FALLBACK };
     renderAll(d);
@@ -268,7 +264,7 @@ function renderKPI(k) {
   if (!k) return;
   document.getElementById('k-total').textContent = Math.round(k.totalHeadcount||0).toLocaleString() + ' 명';
   document.getElementById('k-users').textContent = (k.totalUsers||0).toLocaleString() + ' 명';
-  document.getElementById('k-rate').textContent  = (k.usageRate||0).toFixed(1) + '%';
+  document.getElementById('k-rate').textContent  = ((k.usageRate||0).toFixed(1)) + '%';
 }
 
 /* 일별 차트 */
@@ -430,7 +426,7 @@ function renderCourses(p, courses) {
   const tbody = document.getElementById(p+'-courses');
   if (!tbody||!courses.length) return;
   tbody.innerHTML = courses.map((c,i) =>
-    `<tr class="r${i+1}"><td class="c-rank">${i+1}</td><td class="c-name">${c.name}</td><td class="c-num">${c.users.toLocaleString()}</td><td class="c-num">${Math.round(c.hours).toLocaleString()}</td></tr>`
+    `<tr class="r${i+1}"><td class="c-rank">${i+1}</td><td class="c-name">${c.name}</td><td class="c-num">${c.users.toLocaleString()}</td><td class="c-num">${c.hours.toLocaleString()}</td></tr>`
   ).join('');
 }
 
