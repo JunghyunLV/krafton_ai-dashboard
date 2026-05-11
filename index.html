@@ -431,7 +431,7 @@ function renderCourses(p, courses) {
   const tbody = document.getElementById(p+'-courses');
   if (!tbody||!courses.length) return;
   tbody.innerHTML = courses.map((c,i) =>
-    `<tr class="r${i+1}"><td class="c-rank">${i+1}</td><td class="c-name">${c.name}</td><td class="c-num">${c.users.toLocaleString()}</td><td class="c-num">${c.hours.toLocaleString()}</td></tr>`
+    `<tr class="r${i+1}"><td class="c-rank">${i+1}</td><td class="c-name">${c.name}</td><td class="c-num">${c.users.toLocaleString()}</td><td class="c-num">${Math.round(c.hours).toLocaleString()}</td></tr>`
   ).join('');
 }
 
