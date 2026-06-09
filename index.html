@@ -10,7 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font-size:12px;}
 
-/* 로딩 */
 #loading{position:fixed;inset:0;background:#1a1a2e;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s;}
 #loading.hide{opacity:0;pointer-events:none;}
 .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.15);border-top-color:#4CAF50;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px;}
@@ -18,7 +17,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font
 #loading p{color:#aaa;font-size:13px;}
 #err{display:none;background:#fff3cd;border:1px solid #ffc107;padding:8px 14px;margin:6px 16px;border-radius:4px;font-size:12px;color:#856404;}
 
-/* 헤더 */
 .top-header{background:#1e1e32;color:#fff;padding:8px 16px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.4);}
 .top-header h1{font-size:15px;font-weight:700;white-space:nowrap;}
 .upd{font-size:11px;color:#aaa;white-space:nowrap;}
@@ -30,24 +28,28 @@ body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font
 .kpi-chip .val.g{color:#4CAF50;}
 .hdr-note{font-size:9px;color:#888;line-height:1.5;white-space:nowrap;}
 
-/* 섹션 타이틀 */
 .sec-title{background:#2c2c4a;color:#fff;padding:7px 14px;font-size:12px;font-weight:600;border-left:3px solid #4CAF50;margin-bottom:4px;}
 .sec-title.blue{border-left-color:#4fc3f7;}
 .sec-title.purple{border-left-color:#9c27b0;}
 .sec-title .dr{font-size:10px;font-weight:400;color:#aaa;margin-left:10px;}
 
-/* 페이지 */
 .page{max-width:1600px;margin:0 auto;padding:10px 14px;}
 
-/* 섹션1 그리드: 법인목록 | 차트 | 테이블 */
-.s1-row{display:grid;grid-template-columns:160px 1fr 360px;background:#fff;border:1px solid #d8dce2;border-radius:5px;overflow:hidden;margin-bottom:8px;}
-
-/* 법인 목록 */
+/* ── 법인 필터 사이드바 ── */
 .corp-list{background:#1e1e32;overflow-y:auto;max-height:290px;}
 .corp-list .cl-hdr{padding:5px 10px;font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.05);}
-.corp-list .cl-item{padding:4px 10px;font-size:10px;color:#bbb;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.corp-list .cl-item{
+  padding:6px 10px;font-size:10px;color:#bbb;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;transition:background .12s,color .12s;
+  border-left:3px solid transparent;
+}
+.corp-list .cl-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.corp-list .cl-item.active{background:#1a2744;color:#4fc3f7;border-left-color:#4fc3f7;font-weight:600;}
 
-/* 차트 영역 */
+.s1-row{display:grid;grid-template-columns:160px 1fr 360px;background:#fff;border:1px solid #d8dce2;border-radius:5px;overflow:hidden;margin-bottom:8px;}
+
 .chart-area{padding:10px 14px;border-left:1px solid #eee;}
 .plat-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
 .fc-badge{font-size:14px;font-weight:900;color:#ff5722;letter-spacing:-1px;}
@@ -58,7 +60,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:#eef0f3;color:#1a1a2e;font
 .leg-line{width:16px;height:2px;border-radius:1px;}
 .chart-wrap{position:relative;height:210px;}
 
-/* 법인 테이블 */
 .corp-tbl-wrap{border-left:1px solid #eee;overflow-y:auto;max-height:290px;}
 table{width:100%;border-collapse:collapse;font-size:10px;}
 thead th{background:#1e1e32;color:#fff;padding:5px 7px;text-align:center;position:sticky;top:0;font-size:9px;font-weight:500;white-space:nowrap;}
@@ -71,18 +72,23 @@ tbody tr:hover{background:#e8f5e9;}
 .rl{color:#c62828;font-weight:600;}
 tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-weight:700;}
 
-/* 섹션2 */
+/* 선택된 법인 표시 배지 */
+.corp-filter-badge{
+  display:inline-block;margin-left:10px;
+  font-size:10px;font-weight:600;color:#4fc3f7;
+  background:rgba(79,195,247,.15);border:1px solid rgba(79,195,247,.3);
+  padding:2px 8px;border-radius:10px;
+}
+
 .s2-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
 .dept-card{background:#fff;border:1px solid #d8dce2;border-radius:5px;padding:10px 14px;}
 .dept-wrap{position:relative;height:200px;}
 
-/* 섹션3 */
 .s3-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .ref-card{background:#fff;border:1px solid #d8dce2;border-radius:5px;padding:10px 14px;}
 .ref-title{font-size:11px;font-weight:600;color:#333;text-align:center;margin-bottom:8px;}
 .dow-wrap{position:relative;height:150px;margin-bottom:14px;}
 
-/* 인기강좌 */
 .c-table{width:100%;border-collapse:collapse;font-size:10px;}
 .c-table thead th{background:#1e1e32;color:#fff;padding:4px 7px;font-size:9px;font-weight:500;}
 .c-table tbody td{padding:4px 7px;border-bottom:1px solid #f2f4f6;}
@@ -103,7 +109,6 @@ tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-we
 </div>
 <div id="err"></div>
 
-<!-- 헤더 -->
 <div class="top-header">
   <h1>🤖 AI 역량강화 교육 이용 현황</h1>
   <div class="upd">update : <span id="upd-date">-</span></div>
@@ -117,8 +122,11 @@ tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-we
 
 <div class="page">
 
-<!-- 섹션1 -->
-<div class="sec-title">①법인&기간별 이용 현황 <span class="dr" id="period-label-1">기간: -</span></div>
+<div class="sec-title">
+  ①법인&기간별 이용 현황
+  <span class="dr" id="period-label-1">기간: -</span>
+  <span class="corp-filter-badge" id="filter-badge">전체</span>
+</div>
 
 <!-- FC 행 -->
 <div class="s1-row">
@@ -198,13 +206,9 @@ tfoot td{background:#1e1e32;color:#fff;padding:4px 7px;text-align:center;font-we
   </div>
 </div>
 
-</div><!-- /page -->
+</div>
 
 <script>
-// ★ 배포한 GAS 웹앱 URL로 교체하세요 ★
-// GAS_URL 제거 — data.json fetch 방식으로 전환
-
-// fallback (GAS 연결 실패 시에만 사용)
 const CORP_TOTAL_FALLBACK = {
   'KRAFTON HQ':1263,'PUBG STUDIOS':661,'bluehole studio':151,
   'inZOI studio':131,'5minlab':113,'Rising Wings':64,
@@ -213,6 +217,11 @@ const CORP_TOTAL_FALLBACK = {
   'Loonshot Games':40,'Olivetree Games':16,'기타(해외파견)':2
 };
 let corpTotalMap = { ...CORP_TOTAL_FALLBACK };
+
+// ── 전역 상태 ──
+let globalData = null;
+let selectedCorp = '전체'; // '전체' 또는 법인명
+let chartInstances = {}; // 차트 인스턴스 저장 (재생성용)
 
 /* ── 데이터 로드 ── */
 function load() {
@@ -229,9 +238,10 @@ function onData(d) {
   if (d.error) { showErr('데이터 오류: ' + d.error); return; }
   try {
     corpTotalMap = Object.keys(d.corpTotals || {}).length ? d.corpTotals : { ...CORP_TOTAL_FALLBACK };
-    renderAll(d);
+    globalData = d;
     document.getElementById('upd-date').textContent = d.updatedAt || '-';
-    document.getElementById('period-label-1').textContent = d.periodLabel ? `기간: ${d.periodLabel}` : '기간: -';
+    document.getElementById('period-label-1').textContent = d.periodLabel ? '기간: ' + d.periodLabel : '기간: -';
+    renderAll(d);
     document.getElementById('loading').classList.add('hide');
   } catch(e) { showErr('렌더링 오류: ' + e.message); }
 }
@@ -240,6 +250,81 @@ function showErr(msg) {
   document.getElementById('loading').classList.add('hide');
   const b = document.getElementById('err');
   b.style.display = 'block'; b.textContent = '⚠️ ' + msg;
+}
+
+/* ── 법인 선택 ── */
+function selectCorp(corp) {
+  selectedCorp = corp;
+
+  // 배지 업데이트
+  document.getElementById('filter-badge').textContent = corp;
+
+  // 사이드바 active 상태 업데이트 (FC, INF 둘 다)
+  ['fc-corp-list', 'inf-corp-list'].forEach(function(listId) {
+    document.querySelectorAll('#' + listId + ' .cl-item').forEach(function(el) {
+      el.classList.toggle('active', el.dataset.corp === corp);
+    });
+  });
+
+  if (!globalData) return;
+
+  // 일별 차트 재렌더
+  var fcDaily = filterDaily(globalData.fcDaily || [], corp);
+  var infDaily = filterDaily(globalData.infDaily || [], corp);
+  renderDailyChart('fc', fcDaily);
+  renderDailyChart('inf', infDaily);
+
+  // 테이블 재렌더 (필터된 법인만 또는 전체)
+  var fcCorps = corp === '전체' ? globalData.fcCorps : globalData.fcCorps.filter(function(c){ return c.name === corp; });
+  var infCorps = corp === '전체' ? globalData.infCorps : globalData.infCorps.filter(function(c){ return c.name === corp; });
+  renderCorpTable('fc', fcCorps);
+  renderCorpTable('inf', infCorps);
+
+  // KPI 재계산
+  renderKPIFiltered(corp);
+}
+
+/* 일별 데이터 필터링
+   현재 data.json의 fcDaily/infDaily는 전체 합산 데이터라 법인별 분리가 불가능.
+   → 법인 선택 시 해당 법인의 수강인원 비율로 시계열을 스케일링해서 근사치 표시 */
+function filterDaily(data, corp) {
+  if (corp === '전체' || !data.length) return data;
+
+  // 선택 법인의 수강인원 / 전체 수강인원 비율 계산
+  var fcCorps = (globalData.fcCorps || []);
+  var infCorps = (globalData.infCorps || []);
+  var allCorps = fcCorps.concat(infCorps);
+  var totalUsers = allCorps.reduce(function(s,c){ return s + (c.users||0); }, 0);
+  var corpRow = allCorps.find(function(c){ return c.name === corp; });
+  var ratio = (corpRow && totalUsers > 0) ? (corpRow.users / totalUsers) : 0;
+
+  return data.map(function(d) {
+    return {
+      dateLabel: d.dateLabel,
+      hours: Math.round(d.hours * ratio * 10) / 10,
+      users: Math.round(d.users * ratio)
+    };
+  });
+}
+
+/* KPI 필터 반영 */
+function renderKPIFiltered(corp) {
+  if (corp === '전체') {
+    renderKPI(globalData.kpi);
+    return;
+  }
+  var fcRow = (globalData.fcCorps || []).find(function(c){ return c.name === corp; });
+  var infRow = (globalData.infCorps || []).find(function(c){ return c.name === corp; });
+  var total = corpTotalMap[corp] || 0;
+  var fcUsers = fcRow ? (fcRow.users || 0) : 0;
+  var infUsers = infRow ? (infRow.users || 0) : 0;
+  // 중복 제거 없이 각 플랫폼 수강인원 합 (원본 대시보드 방식과 동일)
+  var users = Math.max(fcUsers, infUsers); // 더 큰 값으로 단순 표시
+  var rate = total > 0 ? Math.round(users / total * 1000) / 10 : 0;
+
+  document.getElementById('k-total').textContent = total.toLocaleString() + ' 명';
+  document.getElementById('k-users').textContent = users.toLocaleString() + ' 명';
+  document.getElementById('k-rate').textContent = rate.toFixed(1) + '%';
 }
 
 /* ── 전체 렌더링 ── */
@@ -269,20 +354,33 @@ function renderKPI(k) {
 
 /* 일별 차트 */
 function renderDailyChart(p, data) {
-  if (!data.length) return;
-  const ctx = document.getElementById(p+'-daily').getContext('2d');
-  const isFC = p==='fc';
-  const barColor = isFC ? 'rgba(239,154,154,.8)' : 'rgba(128,203,196,.8)';
-  const lineColor = isFC ? '#e53935' : '#00897b';
+  // 기존 차트 인스턴스 파괴 후 재생성
+  if (chartInstances[p + '-daily']) {
+    chartInstances[p + '-daily'].destroy();
+    chartInstances[p + '-daily'] = null;
+  }
+  var canvas = document.getElementById(p + '-daily');
+  if (!canvas) return;
 
-  new Chart(ctx, {
+  if (!data.length) {
+    var ctx0 = canvas.getContext('2d');
+    ctx0.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+
+  var ctx = canvas.getContext('2d');
+  var isFC = p === 'fc';
+  var barColor = isFC ? 'rgba(239,154,154,.8)' : 'rgba(128,203,196,.8)';
+  var lineColor = isFC ? '#e53935' : '#00897b';
+
+  chartInstances[p + '-daily'] = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: data.map(d=>d.dateLabel),
+      labels: data.map(function(d){ return d.dateLabel; }),
       datasets: [
-        { type:'bar', label:'학습시간(H)', data:data.map(d=>d.hours),
+        { type:'bar', label:'학습시간(H)', data:data.map(function(d){ return d.hours; }),
           backgroundColor:barColor, borderWidth:0, yAxisID:'y', barPercentage:.9 },
-        { type:'line', label:'수강인원(명)', data:data.map(d=>d.users),
+        { type:'line', label:'수강인원(명)', data:data.map(function(d){ return d.users; }),
           borderColor:lineColor, borderWidth:1.5, pointRadius:0,
           tension:.3, yAxisID:'y2', fill:false }
       ]
@@ -292,10 +390,10 @@ function renderDailyChart(p, data) {
       plugins:{ legend:{display:false}, tooltip:{mode:'index',intersect:false} },
       scales:{
         x:{ ticks:{font:{size:8},maxRotation:0,autoSkip:false,callback:function(val,idx){
-              const label=this.getLabelForValue(val);
-              const m=label.match(/^(\d+)월\s*(\d+)일$/);
+              var label=this.getLabelForValue(val);
+              var m=label.match(/^(\d+)월\s*(\d+)일$/);
               if(!m) return null;
-              const month=+m[1],day=+m[2];
+              var month=+m[1],day=+m[2];
               if((month===9&&day===22)||day===1||day===15) return label;
               return null;
             }}, grid:{display:false} },
@@ -308,55 +406,64 @@ function renderDailyChart(p, data) {
 
 /* 법인 테이블 */
 function renderCorpTable(p, corps) {
-  const tbody = document.getElementById(p+'-tbody');
-  const tfoot = document.getElementById(p+'-tfoot');
+  var tbody = document.getElementById(p+'-tbody');
+  var tfoot = document.getElementById(p+'-tfoot');
   if (!tbody) return;
 
-  let sumTotal=0, sumUsers=0;
-  tbody.innerHTML = corps.map(c => {
-    // ★ 수정: corpTotalMap(하드코딩) 대신 GAS에서 받은 c.total을 그대로 사용
-    const total = c.total || 0;
-    const users = c.users || 0;
-    const rate  = c.rate  || (total>0 ? Math.round(users/total*1000)/10 : 0);
+  var sumTotal=0, sumUsers=0;
+  tbody.innerHTML = corps.map(function(c) {
+    var total = c.total || 0;
+    var users = c.users || 0;
+    var rate  = c.rate  || (total>0 ? Math.round(users/total*1000)/10 : 0);
     sumTotal += total; sumUsers += users;
-    const rc = rate>=40?'rh':rate>=20?'rm':'rl';
-    return `<tr><td class="tn">${c.name}</td><td>${total.toLocaleString()}</td><td>${users.toLocaleString()}</td><td class="${rc}">${rate}%</td></tr>`;
+    var rc = rate>=40?'rh':rate>=20?'rm':'rl';
+    return '<tr><td class="tn">'+c.name+'</td><td>'+total.toLocaleString()+'</td><td>'+users.toLocaleString()+'</td><td class="'+rc+'">'+rate+'%</td></tr>';
   }).join('');
 
-  const sumRate = sumTotal>0 ? Math.round(sumUsers/sumTotal*1000)/10 : 0;
-  tfoot.innerHTML = `<tr><td>합계</td><td>${sumTotal.toLocaleString()}</td><td>${sumUsers.toLocaleString()}</td><td>${sumRate}%</td></tr>`;
+  var sumRate = sumTotal>0 ? Math.round(sumUsers/sumTotal*1000)/10 : 0;
+  tfoot.innerHTML = '<tr><td>합계</td><td>'+sumTotal.toLocaleString()+'</td><td>'+sumUsers.toLocaleString()+'</td><td>'+sumRate+'%</td></tr>';
 }
 
-/* 법인 리스트 (좌측) */
+/* 법인 리스트 (좌측 사이드바) — 클릭 필터 */
 function renderCorpList(p, corps) {
-  const el = document.getElementById(p+'-corp-list');
+  var el = document.getElementById(p+'-corp-list');
   if (!el) return;
-  // ★ 수정: GAS에서 받은 corps 배열 순서 그대로 표시
-  const names = corps.length ? corps.map(c => c.name) : Object.keys(corpTotalMap);
-  el.innerHTML = '<div class="cl-hdr">법인</div>' +
-    names.map(n => `<div class="cl-item">${n}</div>`).join('');
+  var names = corps.length ? corps.map(function(c){ return c.name; }) : Object.keys(corpTotalMap);
+
+  var html = '<div class="cl-hdr">법인</div>';
+  // 전체 버튼
+  html += '<div class="cl-item active" data-corp="전체" onclick="selectCorp(\'전체\')">전체</div>';
+  names.forEach(function(n) {
+    var escaped = n.replace(/'/g, "\\'");
+    html += '<div class="cl-item" data-corp="'+n+'" onclick="selectCorp(\''+escaped+'\')">'+n+'</div>';
+  });
+  el.innerHTML = html;
 }
 
 /* 본부별 차트 */
 function renderDeptChart(p, deptData) {
+  if (chartInstances[p + '-dept']) {
+    chartInstances[p + '-dept'].destroy();
+    chartInstances[p + '-dept'] = null;
+  }
   if (!deptData.length) return;
-  const ctx = document.getElementById(p+'-dept').getContext('2d');
-  const isFC = p==='fc';
+  var ctx = document.getElementById(p+'-dept').getContext('2d');
+  var isFC = p==='fc';
 
-  const labels = deptData.map(d => d.dept);
-  const hours  = deptData.map(d => d.hours);
-  const users  = deptData.map(d => d.users);
+  var labels = deptData.map(function(d){ return d.dept; });
+  var hours  = deptData.map(function(d){ return d.hours; });
+  var users  = deptData.map(function(d){ return d.users; });
 
-  new Chart(ctx, {
+  chartInstances[p + '-dept'] = new Chart(ctx, {
     type:'bar',
     data:{
-      labels,
+      labels:labels,
       datasets:[
         { type:'bar', label:'누적 학습시간(H)', data:hours,
           backgroundColor:'rgba(96,96,116,.65)', yAxisID:'y' },
         { type:'line', label:'활성유저 수(명)', data:users,
-          borderColor: isFC?'#e53935':'#00897b',
-          backgroundColor: isFC?'#e53935':'#00897b',
+          borderColor:isFC?'#e53935':'#00897b',
+          backgroundColor:isFC?'#e53935':'#00897b',
           borderWidth:2, pointRadius:3, tension:0, yAxisID:'y2', fill:false }
       ]
     },
@@ -376,17 +483,21 @@ function renderDeptChart(p, deptData) {
 
 /* 요일별 차트 */
 function renderDowChart(p, dowData) {
+  if (chartInstances[p + '-dow']) {
+    chartInstances[p + '-dow'].destroy();
+    chartInstances[p + '-dow'] = null;
+  }
   if (!dowData.length) return;
-  const ctx = document.getElementById(p+'-dow').getContext('2d');
-  const isFC = p==='fc';
-  const color = isFC ? 'rgba(229,57,53,.7)' : 'rgba(0,137,123,.7)';
+  var ctx = document.getElementById(p+'-dow').getContext('2d');
+  var isFC = p==='fc';
+  var color = isFC ? 'rgba(229,57,53,.7)' : 'rgba(0,137,123,.7)';
 
-  new Chart(ctx, {
+  chartInstances[p + '-dow'] = new Chart(ctx, {
     type:'bar',
     data:{
-      labels: dowData.map(d=>d.day),
+      labels: dowData.map(function(d){ return d.day; }),
       datasets:[{
-        label:'비중(%)', data:dowData.map(d=>d.pct),
+        label:'비중(%)', data:dowData.map(function(d){ return d.pct; }),
         backgroundColor:color, borderRadius:3
       }]
     },
@@ -394,26 +505,27 @@ function renderDowChart(p, dowData) {
       responsive:true, maintainAspectRatio:false, animation:false,
       plugins:{
         legend:{display:false},
-        tooltip:{ callbacks:{ label: c => c.raw+'%' } }
+        tooltip:{ callbacks:{ label: function(c){ return c.raw+'%'; } } }
       },
       scales:{
         x:{ ticks:{font:{size:11}}, grid:{display:false} },
-        y:{ min:0, max:25, ticks:{font:{size:9},stepSize:5,callback:v=>v+'%'}, grid:{color:'rgba(0,0,0,.04)'} }
+        y:{ min:0, max:25, ticks:{font:{size:9},stepSize:5,callback:function(v){ return v+'%'; }}, grid:{color:'rgba(0,0,0,.04)'} }
       }
     },
     plugins:[{
       id:'datalabels',
-      afterDatasetDraw(chart) {
-        const {ctx,data} = chart;
-        chart.getDatasetMeta(0).data.forEach((bar,i) => {
-          const v = data.datasets[0].data[i];
+      afterDatasetDraw: function(chart) {
+        var ctx2 = chart.ctx;
+        var data = chart.data;
+        chart.getDatasetMeta(0).data.forEach(function(bar, i) {
+          var v = data.datasets[0].data[i];
           if (v>0) {
-            ctx.save();
-            ctx.font = 'bold 10px Noto Sans KR';
-            ctx.fillStyle = '#333';
-            ctx.textAlign = 'center';
-            ctx.fillText(v+'%', bar.x, bar.y-5);
-            ctx.restore();
+            ctx2.save();
+            ctx2.font = 'bold 10px Noto Sans KR';
+            ctx2.fillStyle = '#333';
+            ctx2.textAlign = 'center';
+            ctx2.fillText(v+'%', bar.x, bar.y-5);
+            ctx2.restore();
           }
         });
       }
@@ -421,13 +533,13 @@ function renderDowChart(p, dowData) {
   });
 }
 
-/* 인기강좌 테이블 */
+/* 인기강좌 */
 function renderCourses(p, courses) {
-  const tbody = document.getElementById(p+'-courses');
+  var tbody = document.getElementById(p+'-courses');
   if (!tbody||!courses.length) return;
-  tbody.innerHTML = courses.map((c,i) =>
-    `<tr class="r${i+1}"><td class="c-rank">${i+1}</td><td class="c-name">${c.name}</td><td class="c-num">${c.users.toLocaleString()}</td><td class="c-num">${c.hours.toLocaleString()}</td></tr>`
-  ).join('');
+  tbody.innerHTML = courses.map(function(c,i){
+    return '<tr class="r'+(i+1)+'"><td class="c-rank">'+(i+1)+'</td><td class="c-name">'+c.name+'</td><td class="c-num">'+c.users.toLocaleString()+'</td><td class="c-num">'+c.hours.toLocaleString()+'</td></tr>';
+  }).join('');
 }
 
 window.onload = load;
